@@ -1,0 +1,79 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import accuracy_score
+
+df=pd.read_csv('Iris.csv')
+
+df.head()
+
+df.head(10)
+
+df.tail()
+
+df.shape
+
+df.isnull().sum()
+
+df.dtypes
+
+data=df.groupby('Species')
+
+data.head()
+
+df['Species'].unique()
+
+df.info()
+
+plt.boxplot(df['SepalLengthCm'])
+
+plt.boxplot(df['SepalWidthCm'])
+
+plt.boxplot(df['PetalLengthCm'])
+
+plt.boxplot(df['PetalWidthCm'])
+
+df.drop('Id',axis=1,inplace=True)
+
+sns.heatmap(df.corr())
+
+plt.figure(figsize=(7,4))
+sns.heatmap(df.corr(),annot=True,cmap='summer')
+
+sp={'Iris-setosa':1,'Iris-versicolor':2,'Iris-virginica':3}
+
+df.Species=[sp[i] for i in df.Species]
+
+df
+
+x=df.iloc[:,0:4]
+
+x
+
+y=df.iloc[:,4]
+
+y
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.33,random_state=42)
+
+mode1=LinearRegression()
+
+mode1.fit(x,y)
+
+mode1.score(x,y)
+
+mode1.coef_
+
+mode1.intercept_
+
+y_pred=mode1.predict(x_test)
+
+print("Mean squared error :%.3f" % np.mean(y_pred-y_test)**2)
+
+print("Accurecy: ",mode1.score(x_test,y_test)*100)
+
+
+
